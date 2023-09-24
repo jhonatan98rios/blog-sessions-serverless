@@ -1,0 +1,6 @@
+2rplk06f4l
+
+endpoints:
+  POST - https://2rplk06f4l.execute-api.us-east-1.amazonaws.com/dev/user/login
+  POST - https://2rplk06f4l.execute-api.us-east-1.amazonaws.com/dev/user/check-in
+  DELETE - https://2rplk06f4l.execute-api.us-east-1.amazonaws.com/dev/user/logout/{user}

@@ -1,0 +1,77 @@
+# For full config options, check the docs:
+#    docs.serverless.com
+service: serverless-template 
+frameworkVersion: '3'
+useDotenv: true
+
+plugins:
+  - serverless-plugin-typescript
+  - serverless-offline
+  - serverless-dotenv-plugin
+  - serverless-deployment-bucket
+  - serverless-plugin-tracing
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  stage: ${opt:stage, 'dev'}
+  region: us-east-1
+  deploymentBucket:
+    name: 'blog-sessions-serverless-deployment-bucket'
+  environment:
+    AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1'
+    NODE_OPTIONS: '--enable-source-maps --stack-trace-limit=1000'
+    NODE_PATH: "./:/opt/node_modules"
+    DATABASE_USER: ${env:DATABASE_USER}
+    DATABASE_PASS: ${env:DATABASE_PASS}
+    DATABASE_NAME: ${env:DATABASE_NAME}
+    APP_SECRET: ${env:APP_SECRET}
+    CLIENT_URL: ${env:CLIENT_URL}
+
+package: 
+  individually: true
+  excludeDevDependencies: true
+
+custom:
+  stage: ${opt:stage, 'dev'}
+  serverless-offline:
+    httpPort: 5000
+
+resources:
+  Outputs:
+    ApiUrl:
+      Description: "The API Gateway URL"
+      Value:
+        Fn::Join:
+          - ""
+          - - "https://"
+            - Ref: ApiGatewayRestApi
+            - ".execute-api.${self:provider.region}.amazonaws.com/${self:provider.stage}"
+
+functions:
+  login:
+    handler: src/functions/login/index.login
+    events:
+      - http:
+          path: /user/login
+          method: post
+    memorySize: 128
+    tracing: Active
+
+  checkin:
+    handler: src/functions/checkin/index.checkin
+    events:
+      - http:
+          path: /user/check-in
+          method: post
+    memorySize: 128
+    tracing: Active
+
+  logout:
+    handler: src/functions/logout/index.logout
+    events:
+      - http:
+          path: /user/logout/{user}
+          method: delete
+    memorySize: 128
+    tracing: Active

@@ -1,0 +1,41 @@
+{
+  "name": "blog-sessions-serverless",
+  "version": "0.0.1",
+  "description": "A template for a Serverless API using Typescript and Jest",
+  "main": "functions/healthcheck.js",
+  "scripts": {
+    "test": "jest",
+    "remove": "sls remove",
+    "dev": "serverless offline start",
+    "deploy": "sls deploy",
+    "destroy": "serverless remove",
+    "deploy:prod": "sls deploy --stage production"
+  },
+  "author": "Joshua Toth",
+  "license": "MIT",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^16.3.1",
+    "jsonwebtoken": "^9.0.1",
+    "mongoose": "^7.5.2"
+  },
+  "devDependencies": {
+    "@serverless/typescript": "^3.30.1",
+    "@types/aws-lambda": "^8.10.119",
+    "@types/jsonwebtoken": "^9.0.2",
+    "@types/node": "^14.14.25",
+    "esbuild": "^0.14.11",
+    "json-schema-to-ts": "^1.5.0",
+    "serverless": "^3.0.0",
+    "serverless-deployment-bucket": "^1.6.0",
+    "serverless-dotenv-plugin": "^6.0.0",
+    "serverless-layers": "^2.6.1",
+    "serverless-offline": "^12.0.4",
+    "serverless-plugin-tracing": "^2.0.0",
+    "serverless-plugin-typescript": "^2.1.5",
+    "serverless-webpack": "^5.13.0",
+    "ts-node": "^10.4.0",
+    "tsconfig-paths": "^3.9.0",
+    "typescript": "^5.2.2"
+  }
+}
